@@ -19,3 +19,7 @@
 - Tailwindcss 2.2.7
 - Vite 2.4.4
 - Swiper 7.20.
+
+## Reference
+
+- [台灣各行政區列表](https://gist.github.com/vinta/079cb8d4da486f471365c31388ed1b85)

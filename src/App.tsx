@@ -13,7 +13,7 @@ const App = () => (
   <BrowserRouter>
     <Header />
     <Switch>
-      <Route exact path="/attraction" component={Attraction} />
+      <Route path="/attraction" component={Attraction} />
       <Route exact path="/restaurant" component={Restaurant} />
       <Route exact path="/hotel" component={Hotel} />
       <Route path="*" component={Homepage} />

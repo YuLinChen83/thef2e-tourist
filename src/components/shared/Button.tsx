@@ -17,9 +17,9 @@ export const Button = ({
 }) => (
   <button
     className={clsx(
-      "h-8 flex items-center mr-4 px-4 bg-white rounded-3xl whitespace-nowrap",
+      "h-8 flex items-center mr-4 px-4 rounded-3xl whitespace-nowrap",
       variant === "outlined" &&
-        "text-primary-700 border border-primary-700 hover:bg-primary-100",
+        "bg-white text-primary-700 border border-primary-700 hover:bg-primary-100",
       variant === "filled" && "text-white bg-primary-700 hover:bg-primary-900",
       className
     )}
