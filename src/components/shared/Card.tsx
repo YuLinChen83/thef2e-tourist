@@ -1,18 +1,8 @@
-import clsx from "clsx";
-import React from "react";
+import clsx from 'clsx';
 
-const Card = ({
-  children,
-  className,
-}: {
-  children: React.ReactNode;
-  className?: string;
-}) => (
+const Card = ({ children, className }: { children: React.ReactNode; className?: string }) => (
   <div
-    className={clsx(
-      "flex flex-col my-4 p-5 rounded-lg shadow-card hover:shadow-card2",
-      className
-    )}
+    className={clsx('flex flex-col my-4 p-5 rounded-lg shadow-card hover:shadow-card2', className)}
   >
     {children}
   </div>

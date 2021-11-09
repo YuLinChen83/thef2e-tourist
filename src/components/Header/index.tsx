@@ -1,11 +1,10 @@
-import React from "react";
-import { useHistory } from "react-router-dom";
-import SearchInput from "../shared/SearchInput";
-import Button from "../shared/Button";
-import Logo from "../../assets/TOURist.png";
-import { ReactComponent as TourIcon } from "../../assets/icons/tour.svg";
-import { ReactComponent as FoodIcon } from "../../assets/icons/food.svg";
-import { ReactComponent as BedIcon } from "../../assets/icons/bed.svg";
+import { useHistory } from 'react-router-dom';
+import SearchInput from '../shared/SearchInput';
+import Button from '../shared/Button';
+import Logo from '../../assets/TOURist.png';
+import { ReactComponent as TourIcon } from '../../assets/icons/tour.svg';
+import { ReactComponent as FoodIcon } from '../../assets/icons/food.svg';
+import { ReactComponent as BedIcon } from '../../assets/icons/bed.svg';
 
 const Header = () => {
   const history = useHistory();
@@ -17,34 +16,24 @@ const Header = () => {
             src={Logo}
             alt="logo"
             className="h-5 w-auto mr-8 cursor-pointer"
-            onClick={() => history.push("/")}
+            onClick={() => history.push('/')}
           />
           <SearchInput />
         </div>
         <div className="flex">
-          <Button
-            variant="outlined"
-            onClick={() => history.push("/attraction")}
-          >
+          <Button variant="outlined" onClick={() => history.push('/attraction')}>
             找景點
             <TourIcon className="ml-2" />
           </Button>
-          <Button
-            variant="outlined"
-            onClick={() => history.push("/restaurant")}
-          >
+          <Button variant="outlined" onClick={() => history.push('/restaurant')}>
             找餐廳
             <FoodIcon className="ml-2" />
           </Button>
-          <Button variant="outlined" onClick={() => history.push("/hotel")}>
+          <Button variant="outlined" onClick={() => history.push('/hotel')}>
             找飯店
             <BedIcon className="ml-2" />
           </Button>
-          <Button
-            className="ml-2"
-            variant="filled"
-            onClick={() => history.push("/my")}
-          >
+          <Button className="ml-2" variant="filled" onClick={() => history.push('/my')}>
             我的旅程
           </Button>
         </div>

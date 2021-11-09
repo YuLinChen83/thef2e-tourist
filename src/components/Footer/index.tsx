@@ -1,11 +1,10 @@
-import React from "react";
-import { useHistory } from "react-router-dom";
-import SearchInput from "../shared/SearchInput";
-import Button from "../shared/Button";
-import Logo from "../../assets/TOURist-white.png";
-import { ReactComponent as FacebookIcon } from "../../assets/icons/facebook.svg";
-import { ReactComponent as LineIcon } from "../../assets/icons/line.svg";
-import { ReactComponent as TwitterIcon } from "../../assets/icons/twitter.svg";
+import { useHistory } from 'react-router-dom';
+import SearchInput from '../shared/SearchInput';
+import Button from '../shared/Button';
+import Logo from '../../assets/TOURist-white.png';
+import { ReactComponent as FacebookIcon } from '../../assets/icons/facebook.svg';
+import { ReactComponent as LineIcon } from '../../assets/icons/line.svg';
+import { ReactComponent as TwitterIcon } from '../../assets/icons/twitter.svg';
 
 const Footer = () => {
   const history = useHistory();
@@ -17,7 +16,7 @@ const Footer = () => {
             src={Logo}
             alt="logo"
             className="h-4 w-auto mr-8 cursor-pointer mb-2"
-            onClick={() => history.push("/")}
+            onClick={() => history.push('/')}
           />
           <div className="flex text-primary">
             <FacebookIcon className="mr-1 cursor-pointer" />

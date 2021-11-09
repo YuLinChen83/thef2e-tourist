@@ -1,11 +1,10 @@
-import React from "react";
-import clsx from "clsx";
-import { Route, Switch, useHistory } from "react-router-dom";
-import SwiperCore, { FreeMode } from "swiper";
-import { Swiper, SwiperSlide } from "swiper/react";
-import Button from "../shared/Button";
-import Card from "../shared/Card";
-import CardDetail from "../shared/CardDetail";
+import clsx from 'clsx';
+import { Route, Switch, useHistory } from 'react-router-dom';
+import SwiperCore, { FreeMode } from 'swiper';
+import { Swiper, SwiperSlide } from 'swiper/react';
+import Button from '../shared/Button';
+import Card from '../shared/Card';
+import CardDetail from '../shared/CardDetail';
 
 SwiperCore.use([FreeMode]);
 
@@ -20,19 +19,11 @@ const ThemeSwiper = ({ title, moreLink, data, className }) => {
           查看更多
         </Button>
       </div>
-      <Swiper
-        slidesPerView="auto"
-        spaceBetween={30}
-        grabCursor={true}
-        className={className}
-      >
+      <Swiper slidesPerView="auto" spaceBetween={30} grabCursor={true} className={className}>
         {data.map((item, index) => (
           <SwiperSlide
             key={item.id}
-            className={clsx(
-              index === 0 && "ml-40",
-              index === data.length - 1 && "mr-40"
-            )}
+            className={clsx(index === 0 && 'ml-40', index === data.length - 1 && 'mr-40')}
           >
             <Card className="w-72">
               <CardDetail {...item} />
