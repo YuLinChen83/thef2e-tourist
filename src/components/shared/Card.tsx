@@ -1,3 +1,4 @@
+import React from 'react';
 import clsx from 'clsx';
 
 const Card = ({ children, className }: { children: React.ReactNode; className?: string }) => (

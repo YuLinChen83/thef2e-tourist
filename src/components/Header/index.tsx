@@ -1,3 +1,4 @@
+import React from 'react';
 import { useHistory } from 'react-router-dom';
 import SearchInput from '../shared/SearchInput';
 import Button from '../shared/Button';

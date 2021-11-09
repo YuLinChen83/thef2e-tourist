@@ -1,3 +1,4 @@
+import React from 'react';
 import { ReactComponent as HalfStarIcon } from '../../assets/icons/half-star-filled.svg';
 import { ReactComponent as StarIcon } from '../../assets/icons/star-filled.svg';
 import { ReactComponent as EmptyStarIcon } from '../../assets/icons/star-outline.svg';
