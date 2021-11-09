@@ -28,18 +28,14 @@ const ThemeSwiper = ({ title, moreLink, data, className }) => {
       >
         {data.map((item, index) => (
           <SwiperSlide
-            key={item.name}
+            key={item.id}
             className={clsx(
               index === 0 && "ml-40",
               index === data.length - 1 && "mr-40"
             )}
           >
             <Card className="w-72">
-              <CardDetail
-                name={item.name}
-                picture={item.picture}
-                tags={item.tags}
-              />
+              <CardDetail {...item} />
             </Card>
           </SwiperSlide>
         ))}

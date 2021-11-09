@@ -2,7 +2,7 @@ import React from "react";
 import clsx from "clsx";
 import { Route, Switch, useHistory } from "react-router-dom";
 import useSWR from "swr";
-import { fetcher } from "../utils/fetcher";
+import { fetcher, getCardInfo } from "../utils";
 import SearchInput from "../components/shared/SearchInput";
 import Button from "../components/shared/Button";
 import ThemeSwiper from "../components/shared/ThemeSwiper";
@@ -12,11 +12,11 @@ import SpotBg2 from "../assets/images/bg-m.png";
 const Homepage = () => {
   const history = useHistory();
   const { data: hotList = [], error: hotListError } = useSWR(
-    "/v2/Tourism/ScenicSpot?$top=30&$format=JSON",
+    "/v2/Tourism/ScenicSpot?$select=ID%2CName%2CAddress%2CPicture%2CCity%2CClass1%2CClass2%2CClass3%2COpenTime%2CTicketInfo&$filter=Picture%2FPictureUrl1%20ne%20null%20and%20City%20ne%20null&$top=30&$format=JSON",
     fetcher
   );
   const { data: rainbowList = [], error: rainbowListError } = useSWR(
-    "/v2/Tourism/ScenicSpot?$filter=contains(Name%20%2C'%E5%BD%A9%E8%99%B9')&$top=10&$format=JSON",
+    "/v2/Tourism/ScenicSpot?$select=ID%2CName%2CAddress%2CPicture%2CCity%2CClass1%2CClass2%2CClass3%2COpenTime%2CTicketInfo&$filter=Picture%2FPictureUrl1%20ne%20null%20and%20City%20ne%20null%20and%20contains(Name%20%2C'%E5%BD%A9%E8%99%B9')&$top=30&$format=JSON",
     fetcher
   );
   if (hotListError || rainbowListError) return <>Something Error!</>;
@@ -45,19 +45,7 @@ const Homepage = () => {
         moreLink="/"
         className="hot"
         data={hotList
-          .filter((item) => !!item.Picture.PictureUrl1)
-          .map((item) => ({
-            name: item.Name,
-            picture: item.Picture.PictureUrl1,
-            tags: [
-              item.Address.match(/^.{2}[縣|市]/)[0],
-              item.OpenTime ===
-                "Sun 24 hours；Mon 24 hours；Tue 24 hours；Wed 24 hours；Thu 24 hours；Fri 24 hours；Sat 24 hours" ||
-              "全天"
-                ? "全天候開放"
-                : item.OpenTime,
-            ],
-          }))}
+          .map((item) => getCardInfo(item))}
       />
       <div className="relative">
         <img src={SpotBg2} alt="spot theme" className="w-full" />
@@ -80,19 +68,7 @@ const Homepage = () => {
         moreLink="/"
         className="hot"
         data={rainbowList
-          .filter((item) => !!item.Picture.PictureUrl1)
-          .map((item) => ({
-            name: item.Name,
-            picture: item.Picture.PictureUrl1,
-            tags: [
-              item.City || item.Address?.match(/^.{2}[縣|市]/)[0],
-              item.OpenTime ===
-                "Sun 24 hours；Mon 24 hours；Tue 24 hours；Wed 24 hours；Thu 24 hours；Fri 24 hours；Sat 24 hours" ||
-              "全天"
-                ? "全天候開放"
-                : item.OpenTime,
-            ],
-          }))}
+          .map((item) => getCardInfo(item))}
       />
     </>
   );
