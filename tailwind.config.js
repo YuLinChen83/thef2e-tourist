@@ -42,6 +42,7 @@ module.exports = {
         pt: '66.6%',
         tw: '440px',
         wh: '560px',
+        90: '360px',
       },
       boxShadow: {
         card: '0px 4px 15px rgba(0, 0, 0, 0.2)',

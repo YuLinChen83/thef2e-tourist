@@ -259,8 +259,8 @@ const Attraction = () => {
         {data.map((item, idx) => {
           const newItem = getCardInfo(item);
           return (
-            <div key={idx} className="w-80 flex justify-center">
-              <Card className="w-72">
+            <div key={idx} className="w-90 flex justify-center">
+              <Card className="w-80">
                 <CardDetail {...newItem} />
               </Card>
             </div>
