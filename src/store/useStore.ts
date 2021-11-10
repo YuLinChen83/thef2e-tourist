@@ -1,5 +1,5 @@
-import create from 'zustand';
 import produce from 'immer';
+import create from 'zustand';
 
 export interface State extends Record<string, any> {}
 

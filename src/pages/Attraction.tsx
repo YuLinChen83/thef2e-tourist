@@ -1,17 +1,18 @@
-import React, { Fragment, useState, useEffect, useRef, forwardRef } from 'react';
 import { Menu, Transition } from '@headlessui/react';
 import { ChevronDownIcon } from '@heroicons/react/solid';
-import { Link, useHistory, useLocation } from 'react-router-dom';
-import DatePicker from 'react-datepicker';
-import Star from '../components/shared/Star';
-import Card from '../components/shared/Card';
-import CardDetail from '../components/shared/CardDetail';
 import clsx from 'clsx';
+import React, { forwardRef, Fragment, useEffect, useRef, useState } from 'react';
+import DatePicker from 'react-datepicker';
+import { Link, useHistory, useLocation } from 'react-router-dom';
 import useSWR from 'swr';
-import AttractionBg from '../assets/images/attraction.png';
+
+import { ReactComponent as ArrowIcon } from '../assets/icons/arrow.svg';
 import { ReactComponent as FilterIcon } from '../assets/icons/filter.svg';
 import { ReactComponent as ListIcon } from '../assets/icons/list.svg';
-import { ReactComponent as ArrowIcon } from '../assets/icons/arrow.svg';
+import AttractionBg from '../assets/images/attraction.png';
+import Card from '../components/shared/Card';
+import CardDetail from '../components/shared/CardDetail';
+import Star from '../components/shared/Star';
 import { REGION } from '../constants';
 import { fetcher, getCardInfo } from '../utils';
 
@@ -36,7 +37,7 @@ const Attraction = () => {
 
   const { data = [], error: Error } = useSWR(
     '/v2/Tourism/ScenicSpot?$select=ID%2CName%2CAddress%2CPicture%2CCity%2CClass1%2CClass2%2CClass3%2COpenTime%2CTicketInfo&$filter=Picture%2FPictureUrl1%20ne%20null%20and%20City%20ne%20null&$top=9&$format=JSON',
-    fetcher
+    fetcher,
   );
 
   useEffect(() => {
@@ -68,7 +69,7 @@ const Attraction = () => {
         <div
           className={clsx(
             'absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2',
-            'w-full flex flex-col px-36'
+            'w-full flex flex-col px-36',
           )}
         >
           <h1 className="font-medium text-4xl text-white mb-3">景點列表</h1>
@@ -78,7 +79,7 @@ const Attraction = () => {
                 <div
                   className={clsx(
                     'w-64 flex items-center mr-4 tracking-widest rounded-2xl px-4 py-1 text-sm',
-                    'bg-white border border-primary-700 text-primary-700'
+                    'bg-white border border-primary-700 text-primary-700',
                   )}
                   onClick={() => setIsRegionOpen(true)}
                 >
@@ -88,7 +89,7 @@ const Attraction = () => {
                   className={clsx(
                     'origin-top-left absolute left-0 mt-2 py-3 px-6 w-tw h-wh overflow-scroll',
                     'rounded-md shadow-lg text-grey-600 bg-white ring-1 ring-black ring-opacity-5 focus:outline-none',
-                    !isRegionOpen && 'hidden'
+                    !isRegionOpen && 'hidden',
                   )}
                 >
                   <div className="flex flex-col">
@@ -108,7 +109,7 @@ const Attraction = () => {
                                     className={clsx(
                                       filter.region === country && 'text-primary-600',
                                       'block text-lg whitespace-nowrap hover:text-primary-600',
-                                      'font-semibold ext-lg py-1 pr-3'
+                                      'font-semibold ext-lg py-1 pr-3',
                                     )}
                                   >
                                     {country}
@@ -128,7 +129,7 @@ const Attraction = () => {
                                 <div
                                   className={clsx(
                                     'flex flex-wrap text-md whitespace-nowrap mb-2 text-grey',
-                                    !regionExpand[country] && 'h-0 overflow-hidden'
+                                    !regionExpand[country] && 'h-0 overflow-hidden',
                                   )}
                                 >
                                   {REGION[area][country].map((region, index) => (
@@ -139,7 +140,7 @@ const Attraction = () => {
                                         (regionExpand[region] || filter.region === region) &&
                                           'text-primary-600',
                                         'hover:text-primary-600 pr-5',
-                                        index % 6 === 5 && 'pr-0'
+                                        index % 6 === 5 && 'pr-0',
                                       )}
                                       onClick={() => setIsRegionOpen(false)}
                                     >
@@ -171,7 +172,7 @@ const Attraction = () => {
               <div className="relative" ref={ref2}>
                 <div
                   className={clsx(
-                    'flex items-center tracking-widest rounded-2xl px-3 py-1 bg-primary-700 text-sm text-white cursor-pointer mr-4'
+                    'flex items-center tracking-widest rounded-2xl px-3 py-1 bg-primary-700 text-sm text-white cursor-pointer mr-4',
                   )}
                   onClick={() => setIsFilterOpen(true)}
                 >
@@ -182,7 +183,7 @@ const Attraction = () => {
                   className={clsx(
                     'origin-top-right absolute right-0 mt-2 py-3 px-6 w-tw h-64 overflow-scroll',
                     'rounded-md shadow-lg text-grey-600 bg-white ring-1 ring-black ring-opacity-5 focus:outline-none',
-                    !isFilterOpen && 'hidden'
+                    !isFilterOpen && 'hidden',
                   )}
                 >
                   <ul className="flex flex-col">
@@ -198,13 +199,13 @@ const Attraction = () => {
                               to={`/attraction?type=${type}`}
                               className={clsx(
                                 filter.type === type && 'text-primary-600',
-                                'hover:text-primary-600'
+                                'hover:text-primary-600',
                               )}
                               onClick={() => setIsFilterOpen(false)}
                             >
                               {type}
                             </Link>
-                          )
+                          ),
                         )}
                       </div>
                     </li>
@@ -219,7 +220,7 @@ const Attraction = () => {
                             to={`/attraction?star=${star}`}
                             className={clsx(
                               filter.star === star && 'text-primary-600',
-                              'hover:opacity-80'
+                              'hover:opacity-80',
                             )}
                             onClick={() => setIsFilterOpen(false)}
                           >
@@ -234,7 +235,7 @@ const Attraction = () => {
               <div className="relative">
                 <div
                   className={clsx(
-                    'flex items-center tracking-widest rounded-3xl px-2 py-2 bg-primary-700 text-sm text-white'
+                    'flex items-center tracking-widest rounded-3xl px-2 py-2 bg-primary-700 text-sm text-white',
                   )}
                   // onClick={() => setIsFilterOpen(true)}
                 >
@@ -245,7 +246,7 @@ const Attraction = () => {
                     'origin-top-right absolute right-0 mt-2 py-3 px-6 w-tw h-64 overflow-scroll',
                     'rounded-md shadow-lg text-grey-600 bg-white ring-1 ring-black ring-opacity-5 focus:outline-none',
                     // !isFilterOpen && "hidden"
-                    'hidden'
+                    'hidden',
                   )}
                 >
                   123

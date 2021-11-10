@@ -1,4 +1,5 @@
 import React from 'react';
+
 import Star from '../../components/shared/Star';
 
 const CardDetail = ({ name, picture, city, category1, category2, category3, star }) => (

@@ -1,5 +1,5 @@
-import React from 'react';
 import clsx from 'clsx';
+import React from 'react';
 
 export const Button = ({
   variant,
@@ -21,7 +21,7 @@ export const Button = ({
       variant === 'outlined' &&
         'bg-white text-primary-700 border border-primary-700 hover:bg-primary-100',
       variant === 'filled' && 'text-white bg-primary-700 hover:bg-primary-900',
-      className
+      className,
     )}
     onClick={onClick}
     disabled={disabled}

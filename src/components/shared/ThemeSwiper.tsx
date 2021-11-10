@@ -1,8 +1,9 @@
-import React from 'react';
 import clsx from 'clsx';
+import React from 'react';
 import { Route, Switch, useHistory } from 'react-router-dom';
 import SwiperCore, { FreeMode } from 'swiper';
 import { Swiper, SwiperSlide } from 'swiper/react';
+
 import Button from '../shared/Button';
 import Card from '../shared/Card';
 import CardDetail from '../shared/CardDetail';

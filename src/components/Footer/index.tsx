@@ -1,11 +1,12 @@
 import React from 'react';
 import { useHistory } from 'react-router-dom';
-import SearchInput from '../shared/SearchInput';
-import Button from '../shared/Button';
-import Logo from '../../assets/TOURist-white.png';
+
 import { ReactComponent as FacebookIcon } from '../../assets/icons/facebook.svg';
 import { ReactComponent as LineIcon } from '../../assets/icons/line.svg';
 import { ReactComponent as TwitterIcon } from '../../assets/icons/twitter.svg';
+import Logo from '../../assets/TOURist-white.png';
+import Button from '../shared/Button';
+import SearchInput from '../shared/SearchInput';
 
 const Footer = () => {
   const history = useHistory();

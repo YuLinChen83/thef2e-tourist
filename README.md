@@ -16,9 +16,10 @@
 - React 17.0.0
 - Typescript 4.3.2
 - SWR 1.0.1
-- Tailwindcss 2.2.7
-- Vite 2.4.4
-- Swiper 7.20.
+- Vitawind
+  - Tailwindcss 2.2.7
+  - Vite 2.4.4
+- Swiper 7.2.0
 
 ## Reference
 

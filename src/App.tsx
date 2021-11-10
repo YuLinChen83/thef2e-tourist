@@ -1,13 +1,15 @@
-import React from 'react';
-import { BrowserRouter, Switch, Route } from 'react-router-dom';
-import Homepage from './pages/Homepage';
-import Attraction from './pages/Attraction';
-import Restaurant from './pages/Restaurant';
-import Hotel from './pages/Hotel';
-import Header from './components/Header';
-import Footer from './components/Footer';
-import useStore from './store/useStore';
 import 'swiper/css/bundle';
+
+import React from 'react';
+import { BrowserRouter, Route, Switch } from 'react-router-dom';
+
+import Footer from './components/Footer';
+import Header from './components/Header';
+import Attraction from './pages/Attraction';
+import Homepage from './pages/Homepage';
+import Hotel from './pages/Hotel';
+import Restaurant from './pages/Restaurant';
+import useStore from './store/useStore';
 
 const App = () => (
   <BrowserRouter>

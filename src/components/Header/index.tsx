@@ -1,11 +1,12 @@
 import React from 'react';
 import { useHistory } from 'react-router-dom';
-import SearchInput from '../shared/SearchInput';
-import Button from '../shared/Button';
-import Logo from '../../assets/TOURist.png';
-import { ReactComponent as TourIcon } from '../../assets/icons/tour.svg';
-import { ReactComponent as FoodIcon } from '../../assets/icons/food.svg';
+
 import { ReactComponent as BedIcon } from '../../assets/icons/bed.svg';
+import { ReactComponent as FoodIcon } from '../../assets/icons/food.svg';
+import { ReactComponent as TourIcon } from '../../assets/icons/tour.svg';
+import Logo from '../../assets/TOURist.png';
+import Button from '../shared/Button';
+import SearchInput from '../shared/SearchInput';
 
 const Header = () => {
   const history = useHistory();
