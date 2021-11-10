@@ -4,15 +4,11 @@ import React from 'react';
 export const Button = ({
   variant,
   className,
-  onClick,
-  disabled,
   children,
   ...props
 }: {
   variant?: string;
   className?: string;
-  onClick: () => void;
-  disabled?: boolean;
   children: React.ReactNode;
 }) => (
   <button
@@ -23,8 +19,6 @@ export const Button = ({
       variant === 'filled' && 'text-white bg-primary-700 hover:bg-primary-900',
       className,
     )}
-    onClick={onClick}
-    disabled={disabled}
     {...props}
   >
     {children}

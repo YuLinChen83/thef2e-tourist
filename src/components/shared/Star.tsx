@@ -5,7 +5,7 @@ import { ReactComponent as StarIcon } from '../../assets/icons/star-filled.svg';
 import { ReactComponent as EmptyStarIcon } from '../../assets/icons/star-outline.svg';
 
 const Star = ({ count }) => (
-  <div className="flex mb-3">
+  <div className="inline-flex mb-3">
     {[...new Array(Math.floor(count))].map((_, idx) => (
       <StarIcon key={idx} />
     ))}

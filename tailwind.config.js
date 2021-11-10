@@ -30,6 +30,7 @@ module.exports = {
           600: '#616161',
           700: '#434343',
         },
+        border: '#B8B8B8',
       },
       borderRadius: {
         '4xl': '2.5rem',

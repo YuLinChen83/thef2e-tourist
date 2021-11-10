@@ -14,7 +14,8 @@ import Card from '../components/shared/Card';
 import CardDetail from '../components/shared/CardDetail';
 import Star from '../components/shared/Star';
 import { REGION } from '../constants';
-import { fetcher, getCardInfo } from '../utils';
+import { useQuery } from '../hooks/useQuery';
+import { getCardInfo } from '../utils';
 
 const Attraction = () => {
   const ref = useRef();
@@ -35,9 +36,8 @@ const Attraction = () => {
     setFilter({ ...filter, region: query.get('region') });
   }, [location.search]);
 
-  const { data = [], error: Error } = useSWR(
+  const { data = [], error: Error } = useQuery(
     '/v2/Tourism/ScenicSpot?$select=ID%2CName%2CAddress%2CPicture%2CCity%2CClass1%2CClass2%2CClass3%2COpenTime%2CTicketInfo&$filter=Picture%2FPictureUrl1%20ne%20null%20and%20City%20ne%20null&$top=9&$format=JSON',
-    fetcher,
   );
 
   useEffect(() => {

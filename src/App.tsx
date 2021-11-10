@@ -6,6 +6,7 @@ import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import Footer from './components/Footer';
 import Header from './components/Header';
 import Attraction from './pages/Attraction';
+import AttractionDetail from './pages/AttractionDetail';
 import Homepage from './pages/Homepage';
 import Hotel from './pages/Hotel';
 import Restaurant from './pages/Restaurant';
@@ -15,6 +16,7 @@ const App = () => (
   <BrowserRouter>
     <Header />
     <Switch>
+      <Route exact path="/attraction/:id" component={AttractionDetail} />
       <Route path="/attraction" component={Attraction} />
       <Route exact path="/restaurant" component={Restaurant} />
       <Route exact path="/hotel" component={Hotel} />

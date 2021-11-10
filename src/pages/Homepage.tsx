@@ -1,24 +1,22 @@
 import clsx from 'clsx';
 import React from 'react';
 import { Route, Switch, useHistory } from 'react-router-dom';
-import useSWR from 'swr';
 
 import SpotBg from '../assets/images/bg.png';
 import SpotBg2 from '../assets/images/bg-m.png';
 import Button from '../components/shared/Button';
 import SearchInput from '../components/shared/SearchInput';
 import ThemeSwiper from '../components/shared/ThemeSwiper';
-import { fetcher, getCardInfo } from '../utils';
+import { useQuery } from '../hooks/useQuery';
+import { getCardInfo } from '../utils';
 
 const Homepage = () => {
   const history = useHistory();
-  const { data: hotList = [], error: hotListError } = useSWR(
+  const { data: hotList = [], error: hotListError } = useQuery(
     '/v2/Tourism/ScenicSpot?$select=ID%2CName%2CAddress%2CPicture%2CCity%2CClass1%2CClass2%2CClass3%2COpenTime%2CTicketInfo&$filter=Picture%2FPictureUrl1%20ne%20null%20and%20City%20ne%20null&$top=30&$format=JSON',
-    fetcher,
   );
-  const { data: rainbowList = [], error: rainbowListError } = useSWR(
+  const { data: rainbowList = [], error: rainbowListError } = useQuery(
     "/v2/Tourism/ScenicSpot?$select=ID%2CName%2CAddress%2CPicture%2CCity%2CClass1%2CClass2%2CClass3%2COpenTime%2CTicketInfo&$filter=Picture%2FPictureUrl1%20ne%20null%20and%20City%20ne%20null%20and%20contains(Name%20%2C'%E5%BD%A9%E8%99%B9')&$top=30&$format=JSON",
-    fetcher,
   );
   if (hotListError || rainbowListError) return <>Something Error!</>;
 
