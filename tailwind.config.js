@@ -42,6 +42,7 @@ module.exports = {
         pt: '66.6%',
         tw: '440px',
         wh: '560px',
+        swiper: '480px',
         90: '360px',
       },
       boxShadow: {

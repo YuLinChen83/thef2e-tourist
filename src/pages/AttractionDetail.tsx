@@ -1,5 +1,13 @@
-import React from 'react';
+// Import Swiper styles
+// import 'swiper/css';
+// import 'swiper/css/free-mode';
+// import 'swiper/css/navigation';
+// import 'swiper/css/thumbs';
+import { GoogleMap, useJsApiLoader } from '@react-google-maps/api';
+import React, { useState } from 'react';
 import { Route, Switch, useHistory, useLocation } from 'react-router-dom';
+import SwiperCore, { FreeMode, Navigation, Thumbs } from 'swiper';
+import { Swiper, SwiperSlide } from 'swiper/react';
 
 import { ReactComponent as HeartOutlineIcon } from '../assets/icons/heart-outline.svg';
 import { ReactComponent as PhoneIcon } from '../assets/icons/phone.svg';
@@ -8,12 +16,42 @@ import Button from '../components/shared/Button';
 import Star from '../components/shared/Star';
 import { useQuery } from '../hooks/useQuery';
 
+SwiperCore.use([FreeMode, Navigation, Thumbs]);
+
+const containerStyle = {
+  width: '100%',
+  height: '100%',
+};
+
+const center = {
+  lat: -3.745,
+  lng: -38.523,
+};
+
 const AttractionDetail = ({ match }) => {
   const id = match.params.id;
 
   const { data, isLoading } = useQuery(
     `/v2/Tourism/ScenicSpot?$filter=ID%20eq%20'${id}'&$format=JSON`,
   );
+
+  const [thumbsSwiper, setThumbsSwiper] = useState(null);
+  const { isLoaded } = useJsApiLoader({
+    id: 'google-map-script',
+    googleMapsApiKey: import.meta.env.VITE_APP_G_KEY,
+  });
+
+  const [map, setMap] = React.useState(null);
+
+  const onLoad = React.useCallback(function callback(map) {
+    const bounds = new window.google.maps.LatLngBounds();
+    map.fitBounds(bounds);
+    setMap(map);
+  }, []);
+
+  const onUnmount = React.useCallback(function callback(map) {
+    setMap(null);
+  }, []);
   console.log(data);
 
   if (isLoading) return null;
@@ -88,7 +126,7 @@ const AttractionDetail = ({ match }) => {
         ))}
       </div>
       <div className="inline-flex gap-3">
-        <div className="border border-grey-300 w-2/3 px-7 py-6">
+        <div className="border border-grey-300 w-1/3 flex-none px-7 py-6">
           <dl>
             <dt className="text-primary-800 font-medium text-2xl mb-2">關於</dt>
             <dd className="text-grey-600">{descriptionDetail}</dd>
@@ -100,7 +138,45 @@ const AttractionDetail = ({ match }) => {
             <dd className="text-grey-600">{openTime}</dd>
           </dl>
         </div>
-        <div className="flex-grow">kkk</div>
+        <div className="flex-grow h-swiper">
+          <Swiper
+            style={{ '--swiper-navigation-color': '#fff', '--swiper-pagination-color': '#fff' }}
+            loop={true}
+            // spaceBetween={3}
+            navigation={true}
+            thumbs={{ swiper: thumbsSwiper }}
+            className="mySwiper2"
+          >
+            <SwiperSlide>
+              <img src="https://swiperjs.com/demos/images/nature-1.jpg" />
+            </SwiperSlide>
+            <SwiperSlide>
+              <img src="https://swiperjs.com/demos/images/nature-2.jpg" />
+            </SwiperSlide>
+            <SwiperSlide>
+              <img src="https://swiperjs.com/demos/images/nature-3.jpg" />
+            </SwiperSlide>
+          </Swiper>
+          <Swiper
+            onSwiper={setThumbsSwiper}
+            loop={true}
+            // spaceBetween={3}
+            slidesPerView={2}
+            freeMode={true}
+            watchSlidesProgress={true}
+            className="mySwiper"
+          >
+            <SwiperSlide>
+              <img src="https://swiperjs.com/demos/images/nature-1.jpg" />
+            </SwiperSlide>
+            <SwiperSlide>
+              <img src="https://swiperjs.com/demos/images/nature-2.jpg" />
+            </SwiperSlide>
+            <SwiperSlide>
+              <img src="https://swiperjs.com/demos/images/nature-3.jpg" />
+            </SwiperSlide>
+          </Swiper>
+        </div>
       </div>
       <section className="mt-8">
         <h2 className="text-primary-800 font-medium text-2xl mb-3">景點特色</h2>
@@ -122,9 +198,22 @@ const AttractionDetail = ({ match }) => {
       </section>
       <section className="mt-8">
         <h2 className="text-primary-800 font-medium text-2xl mb-3">鄰近景點</h2>
-        <div className="inline-flex">
-          <div className="border border-grey-300 w-1/3 px-7 py-6">List</div>
-          <div className="flex-grow rounded-lg">Map</div>
+        <div className="inline-flex w-full h-swiper">
+          <div className="border border-grey-300 w-1/3 flex-none px-7 py-6">List</div>
+          <div className="flex-grow rounded-lg">
+            {isLoaded && (
+              <GoogleMap
+                mapContainerStyle={containerStyle}
+                center={center}
+                zoom={10}
+                onLoad={onLoad}
+                onUnmount={onUnmount}
+              >
+                {/* Child components, such as markers, info windows, etc. */}
+                <></>
+              </GoogleMap>
+            )}
+          </div>
         </div>
       </section>
       <section className="mt-8">
