@@ -21,6 +21,7 @@ const Attraction = () => {
   const ref = useRef();
   const ref2 = useRef();
   const location = useLocation();
+  const history = useHistory();
   const [filter, setFilter] = useState({
     region: '',
     visitDate: '',

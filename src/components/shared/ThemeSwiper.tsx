@@ -27,7 +27,13 @@ const ThemeSwiper = ({ title, moreLink, data, className }) => {
             key={item.id}
             className={clsx(index === 0 && 'ml-40', index === data.length - 1 && 'mr-40')}
           >
-            <Card className="w-80">
+            <Card
+              className="w-80 cursor-pointer"
+              onClick={() => {
+                console.log('click!');
+                history.push(`/attraction/${item.id}`);
+              }}
+            >
               <CardDetail {...item} />
             </Card>
           </SwiperSlide>

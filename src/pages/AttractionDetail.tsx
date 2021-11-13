@@ -3,17 +3,21 @@
 // import 'swiper/css/free-mode';
 // import 'swiper/css/navigation';
 // import 'swiper/css/thumbs';
-import { GoogleMap, useJsApiLoader } from '@react-google-maps/api';
+import { GoogleMap, LoadScript, Marker, useJsApiLoader } from '@react-google-maps/api';
 import React, { useState } from 'react';
 import { Route, Switch, useHistory, useLocation } from 'react-router-dom';
 import SwiperCore, { FreeMode, Navigation, Thumbs } from 'swiper';
 import { Swiper, SwiperSlide } from 'swiper/react';
 
 import { ReactComponent as HeartOutlineIcon } from '../assets/icons/heart-outline.svg';
+import { ReactComponent as FoodIcon } from '../assets/icons/p-food.svg';
+import { ReactComponent as HotelIcon } from '../assets/icons/p-hotel.svg';
+import { ReactComponent as Tourcon } from '../assets/icons/p-tour.svg';
 import { ReactComponent as PhoneIcon } from '../assets/icons/phone.svg';
 import { ReactComponent as WebIcon } from '../assets/icons/web.svg';
 import Button from '../components/shared/Button';
 import Star from '../components/shared/Star';
+import Tags from '../components/shared/Tags';
 import { useQuery } from '../hooks/useQuery';
 
 SwiperCore.use([FreeMode, Navigation, Thumbs]);
@@ -23,38 +27,34 @@ const containerStyle = {
   height: '100%',
 };
 
-const center = {
-  lat: -3.745,
-  lng: -38.523,
-};
+function MyComponent({ center, list }) {
+  return (
+    <LoadScript googleMapsApiKey={import.meta.env.VITE_APP_G_KEY}>
+      <GoogleMap mapContainerStyle={containerStyle} center={center} zoom={15}>
+        {/* Child components, such as markers, info windows, etc. */}
+        {list?.map(({ ID, Name, Position: { PositionLat, PositionLon } }, type) => (
+          <Marker
+            key={ID}
+            // onLoad={onLoad}
+            title={Name}
+            position={{ lat: PositionLat, lng: PositionLon }}
+            onMouseOver={(e) => console.log(e)}
+            icon={{ attraction: <Tourcon />, restaurant: <FoodIcon />, hotel: <HotelIcon /> }[type]}
+          />
+        ))}
+      </GoogleMap>
+    </LoadScript>
+  );
+}
+
+export const NearByMap = React.memo(MyComponent);
 
 const AttractionDetail = ({ match }) => {
   const id = match.params.id;
+  const history = useHistory();
 
-  const { data, isLoading } = useQuery(
-    `/v2/Tourism/ScenicSpot?$filter=ID%20eq%20'${id}'&$format=JSON`,
-  );
-
+  const { data, isLoading } = useQuery(`/v2/Tourism/ScenicSpot?$filter=ID%20eq%20'${id}'`);
   const [thumbsSwiper, setThumbsSwiper] = useState(null);
-  const { isLoaded } = useJsApiLoader({
-    id: 'google-map-script',
-    googleMapsApiKey: import.meta.env.VITE_APP_G_KEY,
-  });
-
-  const [map, setMap] = React.useState(null);
-
-  const onLoad = React.useCallback(function callback(map) {
-    const bounds = new window.google.maps.LatLngBounds();
-    map.fitBounds(bounds);
-    setMap(map);
-  }, []);
-
-  const onUnmount = React.useCallback(function callback(map) {
-    setMap(null);
-  }, []);
-  console.log(data);
-
-  if (isLoading) return null;
 
   const [
     {
@@ -68,9 +68,22 @@ const AttractionDetail = ({ match }) => {
       Address: address,
       OpenTime: openTime,
       WebsiteUrl: websiteUrl,
+      Position: { PositionLat: lat, PositionLon: lng },
     },
-  ] = data;
-  // ID,Name,Address,Picture,City,Class1,Class2,Class3,OpenTime,TicketInfo
+  ] = data ?? [{ Position: { PositionLat: 0, PositionLon: 0 } }];
+
+  const { data: nearByData = [] } = useQuery(
+    `/v2/Tourism/ScenicSpot?$top=5&$spatialFilter=nearby(${lat},${lng},30000)`,
+  );
+  const { data: nearByRestaurant = [] } = useQuery(
+    `/v2/Tourism/Restaurant?$top=3&$spatialFilter=nearby(${lat},${lng},30000)`,
+  );
+
+  if (isLoading) return null;
+
+  const markerlist = nearByData
+    .map((item) => ({ ...item, type: 'attraction' }))
+    .concat(nearByRestaurant.map((item) => ({ ...item, type: 'restaurant' })));
 
   return (
     <div className="flex flex-col px-36">
@@ -199,20 +212,42 @@ const AttractionDetail = ({ match }) => {
       <section className="mt-8">
         <h2 className="text-primary-800 font-medium text-2xl mb-3">鄰近景點</h2>
         <div className="inline-flex w-full h-swiper">
-          <div className="border border-grey-300 w-1/3 flex-none px-7 py-6">List</div>
+          <div className="w-1/3 flex-none overflow-scroll">
+            <ul className="mr-5">
+              {markerlist.map((item) => (
+                <li
+                  key={item.ID}
+                  className="w-full inline-flex border-b border-gray-300 py-5 first:pt-0"
+                >
+                  <div
+                    className="w-28 h-28 rounded-lg bg-center bg-cover"
+                    style={{ backgroundImage: `url('${item.Picture.PictureUrl1}')` }}
+                  />
+                  <div className="flex flex-col pl-5">
+                    <div
+                      className="text-grey-700 cursor-pointer"
+                      onClick={() => history.push(`/attraction/${item.ID}`)}
+                    >
+                      {item.Name}
+                    </div>
+                    <Star count={5} />
+                    <div className="pt-1 flex flex-wrap gap-2 whitespace-nowrap">
+                      <Tags data={[city, category1, category2, category3].filter(Boolean)} />
+                    </div>
+                    {/* TODO: 距離 */}
+                  </div>
+                </li>
+              ))}
+            </ul>
+          </div>
           <div className="flex-grow rounded-lg">
-            {isLoaded && (
-              <GoogleMap
-                mapContainerStyle={containerStyle}
-                center={center}
-                zoom={10}
-                onLoad={onLoad}
-                onUnmount={onUnmount}
-              >
-                {/* Child components, such as markers, info windows, etc. */}
-                <></>
-              </GoogleMap>
-            )}
+            <NearByMap
+              center={{
+                lat,
+                lng,
+              }}
+              list={markerlist}
+            />
           </div>
         </div>
       </section>
@@ -283,6 +318,3 @@ const AttractionDetail = ({ match }) => {
   );
 };
 export default AttractionDetail;
-// C1_315081100H_000004
-// Picture/PictureUrl1 ne null and City ne null
-// ID,Name,Address,Picture,City,Class1,Class2,Class3,OpenTime,TicketInfo
