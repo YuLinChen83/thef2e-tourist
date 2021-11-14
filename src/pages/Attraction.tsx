@@ -63,7 +63,7 @@ const Attraction = () => {
 
   return (
     <div className="flex flex-col">
-      <div className="relative">
+      <div className="relative z-10">
         <div className="bg-attraction bg-center h-40">
           <div className="w-full h-full bg-grey-600 backdrop-filter backdrop-blur-lg opacity-40 "></div>
         </div>
@@ -82,7 +82,7 @@ const Attraction = () => {
                     'w-64 flex items-center mr-4 tracking-widest rounded-2xl px-4 py-1 text-sm',
                     'bg-white border border-primary-700 text-primary-700',
                   )}
-                  onClick={() => setIsRegionOpen(true)}
+                  // onClick={() => setIsRegionOpen(true)}
                 >
                   {filter.region || '選擇地區'}
                 </div>
@@ -118,12 +118,12 @@ const Attraction = () => {
                                   {regionExpand[country] ? (
                                     <ArrowIcon
                                       className="fill-current cursor-pointer"
-                                      onClick={() => setRegionExpand({ [country]: false })}
+                                      // onClick={() => setRegionExpand({ [country]: false })}
                                     />
                                   ) : (
                                     <ArrowIcon
                                       className="fill-current cursor-pointer transform -rotate-90"
-                                      onClick={() => setRegionExpand({ [country]: true })}
+                                      // onClick={() => setRegionExpand({ [country]: true })}
                                     />
                                   )}
                                 </div>
@@ -175,7 +175,7 @@ const Attraction = () => {
                   className={clsx(
                     'flex items-center tracking-widest rounded-2xl px-3 py-1 bg-primary-700 text-sm text-white cursor-pointer mr-4',
                   )}
-                  onClick={() => setIsFilterOpen(true)}
+                  // onClick={() => setIsFilterOpen(true)}
                 >
                   篩選
                   <FilterIcon />
@@ -202,7 +202,7 @@ const Attraction = () => {
                                 filter.type === type && 'text-primary-600',
                                 'hover:text-primary-600',
                               )}
-                              onClick={() => setIsFilterOpen(false)}
+                              // onClick={() => setIsFilterOpen(false)}
                             >
                               {type}
                             </Link>
@@ -223,7 +223,7 @@ const Attraction = () => {
                               filter.star === star && 'text-primary-600',
                               'hover:opacity-80',
                             )}
-                            onClick={() => setIsFilterOpen(false)}
+                            // onClick={() => setIsFilterOpen(false)}
                           >
                             <Star count={star} />
                           </Link>
@@ -262,7 +262,10 @@ const Attraction = () => {
           const newItem = getCardInfo(item);
           return (
             <div key={idx} className="w-90 flex justify-center">
-              <Card className="w-80">
+              <Card
+                className="w-80 cursor-pointer"
+                onClick={() => history.push(`/attraction/${item.ID}`)}
+              >
                 <CardDetail {...newItem} />
               </Card>
             </div>

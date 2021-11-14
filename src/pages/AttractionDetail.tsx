@@ -38,7 +38,6 @@ function MyComponent({ center, list }) {
             // onLoad={onLoad}
             title={Name}
             position={{ lat: PositionLat, lng: PositionLon }}
-            onMouseOver={(e) => console.log(e)}
             icon={{ attraction: <Tourcon />, restaurant: <FoodIcon />, hotel: <HotelIcon /> }[type]}
           />
         ))}
@@ -60,6 +59,7 @@ const AttractionDetail = ({ match }) => {
     {
       City: city,
       Name: name,
+      Phone: phone,
       Class1: category1,
       Class2: category2,
       Class3: category3,
@@ -68,7 +68,9 @@ const AttractionDetail = ({ match }) => {
       Address: address,
       OpenTime: openTime,
       WebsiteUrl: websiteUrl,
+      TravelInfo: travelInfo,
       Position: { PositionLat: lat, PositionLon: lng },
+      Picture: { PictureUrl1, PictureUrl2, PictureUrl3 } = {},
     },
   ] = data ?? [{ Position: { PositionLat: 0, PositionLon: 0 } }];
 
@@ -90,18 +92,24 @@ const AttractionDetail = ({ match }) => {
       <nav className="container">
         <ol className="list-reset py-4 rounded flex bg-grey-light text-grey">
           <li>
-            <a href="#" className="no-underline text-indigo">
+            <a
+              href="#"
+              className="no-underline text-indigo"
+              onClick={() => history.push(`/attraction?city=${city}`)}
+            >
               {city}
             </a>
           </li>
-          <li className="px-2">/</li>
+          {/* <li className="px-2">/</li>
           <li>
             <a href="#" className="no-underline text-indigo">
               區
             </a>
           </li>
           <li className="px-2">/</li>
-          <li>類</li>
+          <li>類</li> */}
+          <li className="px-2">/</li>
+          <li>{name}</li>
         </ol>
       </nav>
       <div className="flex justify-between">
@@ -109,10 +117,13 @@ const AttractionDetail = ({ match }) => {
           {name}
         </h1>
         <div className="inline-flex">
-          <Button variant="filled">
-            <a href="tel:+4733378901">撥打電話</a>
-            <PhoneIcon className="ml-1" />
-          </Button>
+          {phone && (
+            <Button variant="filled">
+              <a href={`tel:${phone}`}>撥打電話</a>
+              <PhoneIcon className="ml-1" />
+            </Button>
+          )}
+
           {websiteUrl && (
             <Button variant="outlined" className="px-2" onClick={() => window.open(websiteUrl)}>
               <WebIcon className="text-primary-700 w-4" />
@@ -126,7 +137,7 @@ const AttractionDetail = ({ match }) => {
       <div className="inline-flex mt-4 mb-2 text-grey">
         <Star count={5} />
         <span className="px-4">{`${5} 則評價`}</span>
-        <span>{city}</span>
+        <span>{address}</span>
       </div>
       <div className="inline-flex gap-2 mb-5">
         {[category1, category2, category3].filter(Boolean).map((tag, idx) => (
@@ -151,62 +162,26 @@ const AttractionDetail = ({ match }) => {
             <dd className="text-grey-600">{openTime}</dd>
           </dl>
         </div>
-        <div className="flex-grow h-swiper">
-          <Swiper
-            style={{ '--swiper-navigation-color': '#fff', '--swiper-pagination-color': '#fff' }}
-            loop={true}
-            // spaceBetween={3}
-            navigation={true}
-            thumbs={{ swiper: thumbsSwiper }}
-            className="mySwiper2"
-          >
-            <SwiperSlide>
-              <img src="https://swiperjs.com/demos/images/nature-1.jpg" />
-            </SwiperSlide>
-            <SwiperSlide>
-              <img src="https://swiperjs.com/demos/images/nature-2.jpg" />
-            </SwiperSlide>
-            <SwiperSlide>
-              <img src="https://swiperjs.com/demos/images/nature-3.jpg" />
-            </SwiperSlide>
-          </Swiper>
-          <Swiper
-            onSwiper={setThumbsSwiper}
-            loop={true}
-            // spaceBetween={3}
-            slidesPerView={2}
-            freeMode={true}
-            watchSlidesProgress={true}
-            className="mySwiper"
-          >
-            <SwiperSlide>
-              <img src="https://swiperjs.com/demos/images/nature-1.jpg" />
-            </SwiperSlide>
-            <SwiperSlide>
-              <img src="https://swiperjs.com/demos/images/nature-2.jpg" />
-            </SwiperSlide>
-            <SwiperSlide>
-              <img src="https://swiperjs.com/demos/images/nature-3.jpg" />
-            </SwiperSlide>
-          </Swiper>
+        <div className="flex-grow">
+          <div
+            className="w-full h-full bg-center bg-cover bg-no-repeat"
+            style={{ backgroundImage: `url('${PictureUrl1}')` }}
+          />
         </div>
       </div>
       <section className="mt-8">
         <h2 className="text-primary-800 font-medium text-2xl mb-3">景點特色</h2>
-        <p className="text-grey-600 px-4">
-          景點特色敘述景點特色敘述景點特色敘述景點特色敘述景點特色敘述景點特色敘述景點特色敘述景點特色敘述景點特色敘述景點特色敘述
-        </p>
+        <p className="text-grey-600 px-4">{/* TODO: */}</p>
       </section>
       <section className="mt-8">
         <h2 className="text-primary-800 font-medium text-2xl mb-3">服務設施</h2>
-        <p className="text-grey-600 px-4">
-          景點特色敘述景點特色敘述景點特色敘述景點特色敘述景點特色敘述景點特色敘述景點特色敘述景點特色敘述景點特色敘述景點特色敘述
-        </p>
+        <p className="text-grey-600 px-4">{/* TODO: */} </p>
       </section>
       <section className="mt-8">
         <h2 className="text-primary-800 font-medium text-2xl mb-3">交通方式</h2>
         <p className="text-grey-600 px-4">
-          景點特色敘述景點特色敘述景點特色敘述景點特色敘述景點特色敘述景點特色敘述景點特色敘述景點特色敘述景點特色敘述景點特色敘述
+          {/* TODO: */}
+          {travelInfo}
         </p>
       </section>
       <section className="mt-8">

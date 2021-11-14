@@ -29,10 +29,7 @@ const ThemeSwiper = ({ title, moreLink, data, className }) => {
           >
             <Card
               className="w-80 cursor-pointer"
-              onClick={() => {
-                console.log('click!');
-                history.push(`/attraction/${item.id}`);
-              }}
+              onClick={() => history.push(`/attraction/${item.id}`)}
             >
               <CardDetail {...item} />
             </Card>
